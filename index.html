@@ -1045,6 +1045,123 @@
                 font-size: 1.4rem;
             }
         }
+
+        /* Data Flow Visualization */
+        .data-flow-section {
+            padding: 4rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .data-flow-container {
+            position: relative;
+            padding: 3rem 0;
+        }
+
+        .data-flow-svg {
+            width: 100%;
+            height: 200px;
+            overflow: visible;
+        }
+
+        .flow-node {
+            cursor: default;
+        }
+
+        .flow-node circle {
+            fill: var(--bg-card);
+            stroke: var(--accent);
+            stroke-width: 2;
+            transition: all 0.3s ease;
+        }
+
+        .flow-node:hover circle {
+            fill: var(--accent);
+            filter: drop-shadow(0 0 12px rgba(59, 130, 246, 0.5));
+        }
+
+        .flow-node text {
+            fill: var(--text-primary);
+            font-size: 12px;
+            font-weight: 600;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .flow-node .node-label {
+            fill: var(--text-secondary);
+            font-size: 10px;
+            font-weight: 400;
+        }
+
+        .flow-path {
+            fill: none;
+            stroke: var(--border);
+            stroke-width: 2;
+            stroke-dasharray: 8 4;
+        }
+
+        .flow-path-animated {
+            fill: none;
+            stroke: var(--accent);
+            stroke-width: 2;
+            stroke-dasharray: 8 4;
+            stroke-dashoffset: 200;
+            animation: flowDash 3s linear infinite;
+        }
+
+        @keyframes flowDash {
+            to {
+                stroke-dashoffset: 0;
+            }
+        }
+
+        .flow-arrow {
+            fill: var(--accent);
+        }
+
+        .flow-divider {
+            stroke: var(--border);
+            stroke-width: 1;
+            stroke-dasharray: 4 4;
+        }
+
+        .flow-label {
+            fill: var(--text-secondary);
+            font-size: 11px;
+            font-family: 'JetBrains Mono', monospace;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .flow-branch {
+            fill: none;
+            stroke: var(--border);
+            stroke-width: 1.5;
+        }
+
+        .flow-branch-animated {
+            fill: none;
+            stroke: var(--accent);
+            stroke-width: 1.5;
+            opacity: 0.6;
+            stroke-dasharray: 6 3;
+            stroke-dashoffset: 100;
+            animation: flowDash 2s linear infinite;
+        }
+
+        @media (max-width: 768px) {
+            .data-flow-svg {
+                height: 280px;
+            }
+
+            .flow-node text {
+                font-size: 10px;
+            }
+
+            .flow-node .node-label {
+                font-size: 8px;
+            }
+        }
     </style>
 </head>
 <body>
@@ -1116,6 +1233,71 @@
                 <p>This implementation addresses each pain point with targeted Salesforce configuration. On the sales side: validation rules enforce data quality, formula fields automate lead scoring, visual paths guide agents through each stage, and regional price books handle multi-currency pricing. On the support side: tiered queues route cases by customer priority, entitlements track SLA compliance with milestone timers, and escalation rules automatically flag breaches.</p>
                 <p>The solution is built entirely in a Salesforce Developer Edition org using declarative tools. No Apex code required. This demonstrates that powerful business process automation is achievable through standard Salesforce administration skills.</p>
             </div>
+        </div>
+    </section>
+
+    <!-- Data Flow Visualization -->
+    <section class="data-flow-section">
+        <h2 class="section-title animate-on-scroll">System <span>Data Flow</span></h2>
+        <div class="data-flow-container animate-on-scroll">
+            <svg class="data-flow-svg" viewBox="0 0 900 180" preserveAspectRatio="xMidYMid meet">
+                <!-- Background paths (static) -->
+                <path class="flow-path" d="M 120 90 L 280 90" />
+                <path class="flow-path" d="M 360 90 L 520 50" />
+                <path class="flow-path" d="M 360 90 L 520 130" />
+                <path class="flow-path" d="M 600 130 L 760 130" />
+                
+                <!-- Animated paths (on top) -->
+                <path class="flow-path-animated" d="M 120 90 L 280 90" />
+                <path class="flow-path-animated" d="M 360 90 L 520 50" style="animation-delay: 0.5s;" />
+                <path class="flow-path-animated" d="M 360 90 L 520 130" style="animation-delay: 0.5s;" />
+                <path class="flow-path-animated" d="M 600 130 L 760 130" style="animation-delay: 1s;" />
+
+                <!-- Flow arrows -->
+                <polygon class="flow-arrow" points="275,85 285,90 275,95" />
+                <polygon class="flow-arrow" points="515,45 525,50 515,55" />
+                <polygon class="flow-arrow" points="515,125 525,130 515,135" />
+                <polygon class="flow-arrow" points="755,125 765,130 755,135" />
+
+                <!-- Branch labels -->
+                <text class="flow-label" x="420" y="35">Sales Path</text>
+                <text class="flow-label" x="405" y="165">Service Path</text>
+
+                <!-- Lead Node -->
+                <g class="flow-node" transform="translate(80, 90)">
+                    <circle r="35" />
+                    <text text-anchor="middle" dy="-5">Lead</text>
+                    <text class="node-label" text-anchor="middle" dy="12">Score & Validate</text>
+                </g>
+
+                <!-- Account Node -->
+                <g class="flow-node" transform="translate(320, 90)">
+                    <circle r="35" />
+                    <text text-anchor="middle" dy="-5">Account</text>
+                    <text class="node-label" text-anchor="middle" dy="12">Region & Tier</text>
+                </g>
+
+                <!-- Opportunity Node (Sales) -->
+                <g class="flow-node" transform="translate(560, 50)">
+                    <circle r="32" />
+                    <text text-anchor="middle" dy="-5">Opportunity</text>
+                    <text class="node-label" text-anchor="middle" dy="12">Price Books</text>
+                </g>
+
+                <!-- Case Node (Service) -->
+                <g class="flow-node" transform="translate(560, 130)">
+                    <circle r="32" />
+                    <text text-anchor="middle" dy="-5">Case</text>
+                    <text class="node-label" text-anchor="middle" dy="12">Queue Routing</text>
+                </g>
+
+                <!-- Escalation Node -->
+                <g class="flow-node" transform="translate(800, 130)">
+                    <circle r="32" />
+                    <text text-anchor="middle" dy="-5">Escalation</text>
+                    <text class="node-label" text-anchor="middle" dy="12">SLA Breach</text>
+                </g>
+            </svg>
         </div>
     </section>
 
