@@ -992,7 +992,7 @@
 
         .data-flow-svg {
             width: 100%;
-            height: 200px;
+            height: 240px;
             overflow: visible;
         }
 
@@ -1083,15 +1083,15 @@
 
         @media (max-width: 768px) {
             .data-flow-svg {
-                height: 280px;
+                height: 320px;
             }
 
             .flow-node text {
-                font-size: 10px;
+                font-size: 11px;
             }
 
             .flow-node .node-label {
-                font-size: 8px;
+                font-size: 9px;
             }
         }
     </style>
@@ -1157,62 +1157,62 @@
     <section class="data-flow-section">
         <h2 class="section-title animate-on-scroll">System <span>Data Flow</span></h2>
         <div class="data-flow-container animate-on-scroll">
-            <svg class="data-flow-svg" viewBox="0 0 900 180" preserveAspectRatio="xMidYMid meet">
+            <svg class="data-flow-svg" viewBox="0 0 1000 220" preserveAspectRatio="xMidYMid meet">
                 <!-- Background paths (static) - using smooth curves -->
-                <path class="flow-path" d="M 115 90 L 285 90" />
-                <path class="flow-path" d="M 355 75 Q 440 50, 528 50" />
-                <path class="flow-path" d="M 355 105 Q 440 130, 528 130" />
-                <path class="flow-path" d="M 592 130 L 768 130" />
+                <path class="flow-path" d="M 130 110 L 270 110" />
+                <path class="flow-path" d="M 380 90 Q 480 55, 580 55" />
+                <path class="flow-path" d="M 380 130 Q 480 165, 580 165" />
+                <path class="flow-path" d="M 700 165 L 840 165" />
                 
                 <!-- Animated paths (on top) -->
-                <path class="flow-path-animated" d="M 115 90 L 285 90" />
-                <path class="flow-path-animated" d="M 355 75 Q 440 50, 528 50" style="animation-delay: 0.5s;" />
-                <path class="flow-path-animated" d="M 355 105 Q 440 130, 528 130" style="animation-delay: 0.5s;" />
-                <path class="flow-path-animated" d="M 592 130 L 768 130" style="animation-delay: 1s;" />
+                <path class="flow-path-animated" d="M 130 110 L 270 110" />
+                <path class="flow-path-animated" d="M 380 90 Q 480 55, 580 55" style="animation-delay: 0.5s;" />
+                <path class="flow-path-animated" d="M 380 130 Q 480 165, 580 165" style="animation-delay: 0.5s;" />
+                <path class="flow-path-animated" d="M 700 165 L 840 165" style="animation-delay: 1s;" />
 
                 <!-- Flow arrows -->
-                <polygon class="flow-arrow" points="280,85 290,90 280,95" />
-                <polygon class="flow-arrow" points="523,45 533,50 523,55" />
-                <polygon class="flow-arrow" points="523,125 533,130 523,135" />
-                <polygon class="flow-arrow" points="763,125 773,130 763,135" />
+                <polygon class="flow-arrow" points="265,105 278,110 265,115" />
+                <polygon class="flow-arrow" points="575,50 588,55 575,60" />
+                <polygon class="flow-arrow" points="575,160 588,165 575,170" />
+                <polygon class="flow-arrow" points="835,160 848,165 835,170" />
 
                 <!-- Branch labels -->
-                <text class="flow-label" x="420" y="30">Sales Path</text>
-                <text class="flow-label" x="405" y="170">Service Path</text>
+                <text class="flow-label" x="480" y="25">Sales Path</text>
+                <text class="flow-label" x="480" y="210">Service Path</text>
 
                 <!-- Lead Node -->
-                <g class="flow-node" transform="translate(80, 90)">
-                    <circle r="35" />
-                    <text text-anchor="middle" dy="-5">Lead</text>
-                    <text class="node-label" text-anchor="middle" dy="12">Score & Validate</text>
+                <g class="flow-node" transform="translate(75, 110)">
+                    <circle r="50" />
+                    <text text-anchor="middle" dy="-3">Lead</text>
+                    <text class="node-label" text-anchor="middle" dy="14">Score & Validate</text>
                 </g>
 
                 <!-- Account Node -->
-                <g class="flow-node" transform="translate(320, 90)">
-                    <circle r="35" />
-                    <text text-anchor="middle" dy="-5">Account</text>
-                    <text class="node-label" text-anchor="middle" dy="12">Region & Tier</text>
+                <g class="flow-node" transform="translate(325, 110)">
+                    <circle r="50" />
+                    <text text-anchor="middle" dy="-3">Account</text>
+                    <text class="node-label" text-anchor="middle" dy="14">Region & Tier</text>
                 </g>
 
                 <!-- Opportunity Node (Sales) -->
-                <g class="flow-node" transform="translate(560, 50)">
-                    <circle r="32" />
-                    <text text-anchor="middle" dy="-5">Opportunity</text>
-                    <text class="node-label" text-anchor="middle" dy="12">Price Books</text>
+                <g class="flow-node" transform="translate(640, 55)">
+                    <circle r="55" />
+                    <text text-anchor="middle" dy="-3">Opportunity</text>
+                    <text class="node-label" text-anchor="middle" dy="14">Price Books</text>
                 </g>
 
                 <!-- Case Node (Service) -->
-                <g class="flow-node" transform="translate(560, 130)">
-                    <circle r="32" />
-                    <text text-anchor="middle" dy="-5">Case</text>
-                    <text class="node-label" text-anchor="middle" dy="12">Queue Routing</text>
+                <g class="flow-node" transform="translate(640, 165)">
+                    <circle r="55" />
+                    <text text-anchor="middle" dy="-3">Case</text>
+                    <text class="node-label" text-anchor="middle" dy="14">Queue Routing</text>
                 </g>
 
                 <!-- Escalation Node -->
-                <g class="flow-node" transform="translate(800, 130)">
-                    <circle r="32" />
-                    <text text-anchor="middle" dy="-5">Escalation</text>
-                    <text class="node-label" text-anchor="middle" dy="12">SLA Breach</text>
+                <g class="flow-node" transform="translate(905, 165)">
+                    <circle r="55" />
+                    <text text-anchor="middle" dy="-3">Escalation</text>
+                    <text class="node-label" text-anchor="middle" dy="14">SLA Breach</text>
                 </g>
             </svg>
         </div>
