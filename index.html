@@ -109,6 +109,12 @@
             margin: 0 auto;
         }
 
+        .section-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 5rem 2rem;
+        }
+
         .section-title {
             font-size: 1.875rem;
             font-weight: 700;
@@ -933,28 +939,149 @@
             transform: scale(1.1);
         }
 
-        /* Responsive */
+        /* Responsive - Tablet */
+        @media (max-width: 1024px) {
+            section {
+                padding: 3rem 1.5rem;
+            }
+
+            .hero {
+                padding: 6rem 1.5rem 4rem;
+            }
+
+            .cert-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .timeline {
+                padding-left: 1.5rem;
+            }
+        }
+
+        /* Responsive - Mobile */
         @media (max-width: 768px) {
+            /* Navigation */
             .nav-links {
                 display: none;
             }
 
+            .nav-container {
+                padding: 0 1rem;
+            }
+
+            .nav-social {
+                display: none;
+            }
+
+            /* Hero */
+            .hero {
+                padding: 5rem 1rem 3rem;
+                text-align: center;
+            }
+
             .hero h1 {
-                font-size: 2.5rem;
+                font-size: 2rem;
             }
 
-            .contact-grid {
-                grid-template-columns: 1fr;
+            .hero h2 {
+                font-size: 1.1rem;
             }
 
-            .projects-grid {
-                grid-template-columns: 1fr;
+            .hero-description {
+                font-size: 0.95rem;
+                padding: 0 0.5rem;
             }
 
+            .hero-buttons {
+                flex-direction: column;
+                gap: 0.75rem;
+                align-items: center;
+            }
+
+            .hero-buttons .btn {
+                width: 100%;
+                max-width: 280px;
+                justify-content: center;
+            }
+
+            /* Sections */
+            section {
+                padding: 2.5rem 1rem;
+            }
+
+            .section-container {
+                padding: 2.5rem 1rem;
+            }
+
+            .section-title {
+                font-size: 1.75rem;
+                margin-bottom: 1.5rem;
+            }
+
+            /* About */
+            .about-content {
+                padding: 0;
+            }
+
+            .about-content p {
+                font-size: 0.95rem;
+                margin-bottom: 1rem;
+            }
+
+            /* Tags */
+            .tags-container {
+                gap: 0.5rem;
+                justify-content: center;
+            }
+
+            .tag {
+                font-size: 0.75rem;
+                padding: 0.35rem 0.75rem;
+            }
+
+            /* Timeline */
+            .timeline {
+                padding-left: 1rem;
+            }
+
+            .timeline::before {
+                left: 0;
+            }
+
+            .timeline-item::before {
+                left: -1rem;
+                width: 8px;
+                height: 8px;
+            }
+
+            .timeline-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0.25rem;
+            }
+
+            .timeline-title {
+                font-size: 1.1rem;
+            }
+
+            .timeline-company {
+                font-size: 0.8rem;
+            }
+
+            .timeline-meta {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+
+            .timeline-description {
+                font-size: 0.9rem;
+            }
+
+            /* Features */
             .feature-showcase {
                 grid-template-columns: 1fr;
-                gap: 2rem;
-                padding: 3rem 0;
+                gap: 1.5rem;
+                padding: 2rem 0;
             }
 
             .feature-showcase.reverse {
@@ -974,7 +1101,164 @@
             }
 
             .feature-title {
-                font-size: 1.4rem;
+                font-size: 1.25rem;
+            }
+
+            .feature-description {
+                font-size: 0.9rem;
+            }
+
+            .feature-tags {
+                gap: 0.4rem;
+            }
+
+            .feature-tags .tag {
+                font-size: 0.7rem;
+            }
+
+            /* Screenshots */
+            .screenshot-window {
+                border-radius: 0.5rem;
+            }
+
+            .screenshot-header {
+                padding: 0.5rem 0.75rem;
+            }
+
+            .screenshot-dot {
+                width: 8px;
+                height: 8px;
+            }
+
+            .screenshot-title {
+                font-size: 0.65rem;
+            }
+
+            /* Code blocks */
+            .feature-code code {
+                font-size: 0.75rem;
+                padding: 0.75rem;
+            }
+
+            .code-header {
+                padding: 0.5rem 0.75rem;
+            }
+
+            /* Videos */
+            .video-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+
+            .video-info {
+                padding: 1rem;
+            }
+
+            .video-info h3 {
+                font-size: 1rem;
+            }
+
+            .video-info p {
+                font-size: 0.85rem;
+            }
+
+            /* SLA Cards */
+            .cert-grid {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+
+            .cert-card {
+                padding: 1.25rem;
+            }
+
+            .cert-title {
+                font-size: 1.1rem;
+            }
+
+            .cert-issuer, .cert-date {
+                font-size: 0.85rem;
+            }
+
+            .cert-description {
+                font-size: 0.85rem;
+            }
+
+            /* Project Cards (Docs) */
+            .projects-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .project-card {
+                flex-direction: column;
+            }
+
+            .project-image {
+                width: 100%;
+                height: 120px;
+            }
+
+            .project-content {
+                padding: 1.25rem;
+            }
+
+            .project-title {
+                font-size: 1.1rem;
+            }
+
+            .project-description {
+                font-size: 0.85rem;
+            }
+
+            /* Data Flow */
+            .data-flow-container {
+                overflow-x: auto;
+                padding-bottom: 1rem;
+            }
+
+            .data-flow-svg {
+                min-width: 700px;
+                height: 200px;
+            }
+
+            /* Footer */
+            footer {
+                padding: 1.5rem 1rem;
+            }
+
+            footer p {
+                font-size: 0.8rem;
+            }
+        }
+
+        /* Extra small screens */
+        @media (max-width: 480px) {
+            .hero h1 {
+                font-size: 1.75rem;
+            }
+
+            .hero h2 {
+                font-size: 1rem;
+            }
+
+            .section-title {
+                font-size: 1.5rem;
+            }
+
+            .feature-number {
+                font-size: 1.75rem;
+            }
+
+            .feature-title {
+                font-size: 1.15rem;
+            }
+
+            .timeline-title {
+                font-size: 1rem;
+            }
+
+            .cert-card {
+                padding: 1rem;
             }
         }
 
@@ -1259,7 +1543,7 @@
 
     <!-- Implementation Timeline -->
     <section id="implementation" class="experience-section">
-        <div style="max-width: 1200px; margin: 0 auto; padding: 5rem 2rem;">
+        <div class="section-container">
             <h2 class="section-title animate-on-scroll">Implementation <span>Phases</span></h2>
             <div class="timeline stagger-children">
                 <div class="timeline-item">
@@ -1693,7 +1977,7 @@ CASE(Rating, "Hot", 20, "Warm", 10, 0)</code></pre>
 
     <!-- Future Enhancements Section -->
     <section id="future" class="experience-section">
-        <div style="max-width: 1200px; margin: 0 auto; padding: 5rem 2rem;">
+        <div class="section-container">
             <h2 class="section-title animate-on-scroll">Future <span>Enhancements</span></h2>
             <p style="color: var(--text-secondary); margin-bottom: 2rem;" class="animate-on-scroll">Phase 2 recommendations for scaling the platform as EliMax grows.</p>
             <div class="timeline stagger-children">
