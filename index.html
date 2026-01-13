@@ -122,16 +122,14 @@
         /* Hero */
         .hero {
             min-height: 100vh;
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 4rem;
-            align-items: center;
-            padding-top: 5rem;
-        }
-
-        .hero-content {
             display: flex;
             flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding-top: 5rem;
+            max-width: 900px;
+            margin: 0 auto;
         }
 
         .hero-subtitle {
@@ -170,75 +168,9 @@
             gap: 1rem;
         }
 
-        .hero-visual {
-            position: relative;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .hero-dashboard {
-            position: relative;
-            transform: perspective(1000px) rotateY(-8deg) rotateX(2deg);
-            transition: transform 0.5s ease;
-            animation: float 6s ease-in-out infinite;
-        }
-
-        .hero-dashboard:hover {
-            transform: perspective(1000px) rotateY(-2deg) rotateX(1deg);
-        }
-
-        @keyframes float {
-            0%, 100% { transform: perspective(1000px) rotateY(-8deg) rotateX(2deg) translateY(0); }
-            50% { transform: perspective(1000px) rotateY(-8deg) rotateX(2deg) translateY(-10px); }
-        }
-
-        .hero-dashboard .screenshot-window {
-            box-shadow: 
-                0 25px 50px -12px rgba(0, 0, 0, 0.5),
-                0 0 0 1px rgba(255, 255, 255, 0.1),
-                0 0 80px rgba(59, 130, 246, 0.15);
-        }
-
-        .hero-dashboard img {
-            max-width: 100%;
-            border-radius: 0 0 0.5rem 0.5rem;
-        }
-
         @media (max-width: 1024px) {
-            .hero {
-                grid-template-columns: 1fr;
-                gap: 3rem;
-                text-align: center;
-            }
-
-            .hero-content {
-                align-items: center;
-            }
-
-            .hero-visual {
-                order: -1;
-            }
-
-            .hero-dashboard {
-                transform: perspective(1000px) rotateY(0deg) rotateX(5deg);
-            }
-
-            .hero-dashboard:hover {
-                transform: perspective(1000px) rotateY(0deg) rotateX(2deg);
-            }
-
-            @keyframes float {
-                0%, 100% { transform: perspective(1000px) rotateY(0deg) rotateX(5deg) translateY(0); }
-                50% { transform: perspective(1000px) rotateY(0deg) rotateX(5deg) translateY(-10px); }
-            }
-
             .hero h1 {
                 font-size: 2.5rem;
-            }
-
-            .hero-buttons {
-                justify-content: center;
             }
         }
 
@@ -1191,36 +1123,21 @@
 
     <!-- Hero Section -->
     <section class="hero">
-        <div class="hero-content">
-            <p class="hero-subtitle">Case Study</p>
-            <h1>EliMax Group Solar</h1>
-            <h2>Sales & Service Cloud Implementation</h2>
-            <p class="hero-description">
-                A comprehensive Salesforce implementation addressing sales inefficiencies and customer support challenges for a growing solar energy company. This project tackles lead data quality, regional pricing complexity, and tiered SLA management using Sales Cloud, Service Cloud, and Experience Cloud.
-            </p>
-            <div class="hero-buttons">
-                <a href="#features" class="btn btn-primary">
-                    View Features
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
-                </a>
-                <a href="#implementation" class="btn btn-secondary">
-                    Implementation Details
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
-                </a>
-            </div>
-        </div>
-        <div class="hero-visual">
-            <div class="hero-dashboard">
-                <div class="screenshot-window">
-                    <div class="screenshot-header">
-                        <span class="screenshot-dot red"></span>
-                        <span class="screenshot-dot yellow"></span>
-                        <span class="screenshot-dot green"></span>
-                        <span class="screenshot-title">EliMax Executive Dashboard</span>
-                    </div>
-                    <img src="screenshots/dashboard.png" alt="EliMax Executive Dashboard showing leads by region, cases by tier, and SLA metrics">
-                </div>
-            </div>
+        <p class="hero-subtitle">Case Study</p>
+        <h1>EliMax Group Solar</h1>
+        <h2>Sales & Service Cloud Implementation</h2>
+        <p class="hero-description">
+            A comprehensive Salesforce implementation addressing sales inefficiencies and customer support challenges for a growing solar energy company. This project tackles lead data quality, regional pricing complexity, and tiered SLA management using Sales Cloud, Service Cloud, and Experience Cloud.
+        </p>
+        <div class="hero-buttons">
+            <a href="#features" class="btn btn-primary">
+                View Features
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+            </a>
+            <a href="#implementation" class="btn btn-secondary">
+                Implementation Details
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+            </a>
         </div>
     </section>
 
@@ -1241,27 +1158,27 @@
         <h2 class="section-title animate-on-scroll">System <span>Data Flow</span></h2>
         <div class="data-flow-container animate-on-scroll">
             <svg class="data-flow-svg" viewBox="0 0 900 180" preserveAspectRatio="xMidYMid meet">
-                <!-- Background paths (static) -->
-                <path class="flow-path" d="M 120 90 L 280 90" />
-                <path class="flow-path" d="M 360 90 L 520 50" />
-                <path class="flow-path" d="M 360 90 L 520 130" />
-                <path class="flow-path" d="M 600 130 L 760 130" />
+                <!-- Background paths (static) - using smooth curves -->
+                <path class="flow-path" d="M 115 90 L 285 90" />
+                <path class="flow-path" d="M 355 75 Q 440 50, 528 50" />
+                <path class="flow-path" d="M 355 105 Q 440 130, 528 130" />
+                <path class="flow-path" d="M 592 130 L 768 130" />
                 
                 <!-- Animated paths (on top) -->
-                <path class="flow-path-animated" d="M 120 90 L 280 90" />
-                <path class="flow-path-animated" d="M 360 90 L 520 50" style="animation-delay: 0.5s;" />
-                <path class="flow-path-animated" d="M 360 90 L 520 130" style="animation-delay: 0.5s;" />
-                <path class="flow-path-animated" d="M 600 130 L 760 130" style="animation-delay: 1s;" />
+                <path class="flow-path-animated" d="M 115 90 L 285 90" />
+                <path class="flow-path-animated" d="M 355 75 Q 440 50, 528 50" style="animation-delay: 0.5s;" />
+                <path class="flow-path-animated" d="M 355 105 Q 440 130, 528 130" style="animation-delay: 0.5s;" />
+                <path class="flow-path-animated" d="M 592 130 L 768 130" style="animation-delay: 1s;" />
 
                 <!-- Flow arrows -->
-                <polygon class="flow-arrow" points="275,85 285,90 275,95" />
-                <polygon class="flow-arrow" points="515,45 525,50 515,55" />
-                <polygon class="flow-arrow" points="515,125 525,130 515,135" />
-                <polygon class="flow-arrow" points="755,125 765,130 755,135" />
+                <polygon class="flow-arrow" points="280,85 290,90 280,95" />
+                <polygon class="flow-arrow" points="523,45 533,50 523,55" />
+                <polygon class="flow-arrow" points="523,125 533,130 523,135" />
+                <polygon class="flow-arrow" points="763,125 773,130 763,135" />
 
                 <!-- Branch labels -->
-                <text class="flow-label" x="420" y="35">Sales Path</text>
-                <text class="flow-label" x="405" y="165">Service Path</text>
+                <text class="flow-label" x="420" y="30">Sales Path</text>
+                <text class="flow-label" x="405" y="170">Service Path</text>
 
                 <!-- Lead Node -->
                 <g class="flow-node" transform="translate(80, 90)">
