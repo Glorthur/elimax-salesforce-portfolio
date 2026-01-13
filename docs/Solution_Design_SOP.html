@@ -1,0 +1,859 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Solution Design & SOP | EliMax Group</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-primary: #020617;
+            --bg-secondary: #0f172a;
+            --bg-card: #1e293b;
+            --text-primary: #f8fafc;
+            --text-secondary: #94a3b8;
+            --accent: #3b82f6;
+            --accent-hover: #2563eb;
+            --border: #334155;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.7;
+        }
+
+        a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 1rem 2rem;
+            background: rgba(2, 6, 23, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .back-link {
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: color 0.2s;
+        }
+
+        .back-link:hover {
+            color: var(--text-primary);
+            text-decoration: none;
+        }
+
+        /* Main Content */
+        .doc-container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 8rem 2rem 4rem;
+        }
+
+        .doc-header {
+            margin-bottom: 3rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .doc-header h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .doc-header h1 span {
+            color: var(--accent);
+        }
+
+        .doc-meta {
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+            display: flex;
+            gap: 2rem;
+            margin-top: 1rem;
+        }
+
+        /* Section Styles */
+        .doc-section {
+            margin-bottom: 3rem;
+        }
+
+        h2 {
+            font-size: 1.75rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            color: var(--text-primary);
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--accent);
+            display: inline-block;
+        }
+
+        h3 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin: 2rem 0 1rem;
+            color: var(--text-primary);
+        }
+
+        h4 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin: 1.5rem 0 0.75rem;
+            color: var(--accent);
+        }
+
+        p {
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+        }
+
+        /* Lists */
+        ul, ol {
+            margin: 1rem 0 1.5rem 1.5rem;
+            color: var(--text-secondary);
+        }
+
+        li {
+            margin-bottom: 0.5rem;
+        }
+
+        li strong {
+            color: var(--text-primary);
+        }
+
+        /* Tables */
+        .table-wrapper {
+            overflow-x: auto;
+            margin: 1.5rem 0;
+            border-radius: 0.5rem;
+            border: 1px solid var(--border);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.875rem;
+        }
+
+        th {
+            background: var(--bg-card);
+            color: var(--text-primary);
+            font-weight: 600;
+            text-align: left;
+            padding: 1rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        td {
+            padding: 0.875rem 1rem;
+            color: var(--text-secondary);
+            border-bottom: 1px solid var(--border);
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        tr:hover td {
+            background: rgba(59, 130, 246, 0.05);
+        }
+
+        /* Code blocks */
+        code {
+            font-family: 'JetBrains Mono', monospace;
+            background: var(--bg-card);
+            padding: 0.2rem 0.4rem;
+            border-radius: 0.25rem;
+            font-size: 0.85em;
+            color: var(--accent);
+        }
+
+        pre {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 0.5rem;
+            padding: 1.5rem;
+            overflow-x: auto;
+            margin: 1.5rem 0;
+        }
+
+        pre code {
+            background: none;
+            padding: 0;
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+        }
+
+        /* Info boxes */
+        .info-box {
+            background: var(--bg-secondary);
+            border-left: 4px solid var(--accent);
+            padding: 1rem 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 0 0.5rem 0.5rem 0;
+        }
+
+        .info-box p {
+            margin: 0;
+        }
+
+        /* Key problems list */
+        .key-problems {
+            display: grid;
+            gap: 0.75rem;
+            margin: 1.5rem 0;
+        }
+
+        .problem-item {
+            background: var(--bg-secondary);
+            padding: 1rem 1.25rem;
+            border-radius: 0.5rem;
+            color: var(--text-secondary);
+            border: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .problem-item::before {
+            content: "•";
+            color: var(--accent);
+            font-weight: bold;
+        }
+
+        /* Role hierarchy */
+        .hierarchy {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 0.5rem;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            white-space: pre;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 2rem;
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+            border-top: 1px solid var(--border);
+            margin-top: 4rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .doc-container {
+                padding: 6rem 1rem 2rem;
+            }
+
+            .doc-header h1 {
+                font-size: 1.75rem;
+            }
+
+            h2 {
+                font-size: 1.5rem;
+            }
+
+            .doc-meta {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="nav-container">
+            <a href="../index.html" class="logo">EliMaxGroup</a>
+            <a href="../index.html#docs" class="back-link">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M19 12H5M12 19l-7-7 7-7"/>
+                </svg>
+                Back to Portfolio
+            </a>
+        </div>
+    </nav>
+
+    <main class="doc-container">
+        <header class="doc-header">
+            <h1>Solution Design & <span>SOP</span></h1>
+            <p>Client: EliMax Group Solar Companies</p>
+            <div class="doc-meta">
+                <span>Version: 1.1</span>
+                <span>Date: 2026-01-12</span>
+            </div>
+        </header>
+
+        <!-- Executive Summary -->
+        <section class="doc-section">
+            <h2>1. Executive Summary</h2>
+            <p>This document outlines the Salesforce Solution Design for EliMax Group, addressing challenges in sales lead quality, process visibility, regional pricing, and customer support scalability. The solution utilizes Salesforce Sales Cloud, Service Cloud, and Experience Cloud.</p>
+            
+            <h3>Key Problems Addressed</h3>
+            <div class="key-problems">
+                <div class="problem-item">Incomplete/inaccurate lead data causing wasted sales effort</div>
+                <div class="problem-item">Lack of visual sales process guidance for new agents</div>
+                <div class="problem-item">No standardized lead scoring for prioritization</div>
+                <div class="problem-item">Multi-currency regional pricing complexity</div>
+                <div class="problem-item">Inconsistent support levels across customer tiers</div>
+                <div class="problem-item">SLA violations for Premium customers</div>
+                <div class="problem-item">High volume of support calls that could be deflected</div>
+            </div>
+        </section>
+
+        <!-- System Configuration -->
+        <section class="doc-section">
+            <h2>2. System Configuration</h2>
+            <p><strong>Environment:</strong> Salesforce Developer Edition</p>
+            <p><strong>Core Features Enabled:</strong></p>
+            <ul>
+                <li>Multi-Currency (USD, EUR)</li>
+                <li>Lightning Knowledge</li>
+                <li>Entitlement Management</li>
+                <li>Digital Experiences (Customer Community)</li>
+                <li>Web-to-Case</li>
+            </ul>
+            <div class="info-box">
+                <p><strong>Note:</strong> This implementation is designed for a Developer Edition org. Some features like Email-to-Case and custom Quote templates have limited functionality in Dev Edition.</p>
+            </div>
+        </section>
+
+        <!-- Data Model -->
+        <section class="doc-section">
+            <h2>3. Data Model & Key Components</h2>
+            
+            <h3>3.1 Leads (Sales Cloud)</h3>
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Component</th>
+                            <th>Type</th>
+                            <th>Purpose</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><code>Region__c</code></td>
+                            <td>Picklist</td>
+                            <td>Territory assignment (North America, Europe, Asia)</td>
+                        </tr>
+                        <tr>
+                            <td><code>Lead_Score__c</code></td>
+                            <td>Formula (Number)</td>
+                            <td>Prioritize high-value prospects (0-40 scale)</td>
+                        </tr>
+                        <tr>
+                            <td><code>Require_Phone_or_Email</code></td>
+                            <td>Validation Rule</td>
+                            <td>Data quality enforcement</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h4>Lead Score Calculation</h4>
+            <ul>
+                <li><strong>+10 points:</strong> Email provided</li>
+                <li><strong>+10 points:</strong> Phone provided</li>
+                <li><strong>+20 points:</strong> Rating = Hot</li>
+                <li><strong>+10 points:</strong> Rating = Warm</li>
+            </ul>
+
+            <h3>3.2 Accounts</h3>
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Component</th>
+                            <th>Type</th>
+                            <th>Purpose</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><code>Region__c</code></td>
+                            <td>Picklist</td>
+                            <td>Determines Price Book for Opportunities</td>
+                        </tr>
+                        <tr>
+                            <td><code>Support_Tier__c</code></td>
+                            <td>Picklist</td>
+                            <td>Drives SLA and case routing (Basic/Standard/Premium)</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h3>3.3 Opportunities & Products</h3>
+            <ul>
+                <li><strong>Regional Price Books:</strong> Separate Price Books for North America (USD), Europe (EUR), and Asia (USD).</li>
+                <li><strong>Products:</strong> EliMax Solar Panel 300W, EliMax Inverter 5kW.</li>
+                <li><strong>Quotes:</strong> Standard Salesforce Quoting enabled for PDF generation.</li>
+            </ul>
+
+            <h3>3.4 Cases (Support)</h3>
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Component</th>
+                            <th>Type</th>
+                            <th>Purpose</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Assignment Rules</td>
+                            <td><code>EliMax Routing</code></td>
+                            <td>Routes cases to queues by Support Tier</td>
+                        </tr>
+                        <tr>
+                            <td>Queues</td>
+                            <td>Premium/Standard/Basic</td>
+                            <td>Dedicated teams per tier</td>
+                        </tr>
+                        <tr>
+                            <td>Escalation Rules</td>
+                            <td><code>EliMax Escalation</code></td>
+                            <td>Escalates cases breaching SLA</td>
+                        </tr>
+                        <tr>
+                            <td>Web-to-Case</td>
+                            <td>Enabled</td>
+                            <td>Automated case creation from Help Center</td>
+                        </tr>
+                        <tr>
+                            <td>Case Deflection Flow</td>
+                            <td>Screen Flow</td>
+                            <td>Guides customers through Knowledge before case creation</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h3>3.5 Entitlements & Milestones</h3>
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Milestone</th>
+                            <th>Premium SLA</th>
+                            <th>Standard SLA</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>First Response</td>
+                            <td>1 Hour</td>
+                            <td>4 Hours</td>
+                        </tr>
+                        <tr>
+                            <td>Case Resolution</td>
+                            <td>8 Hours</td>
+                            <td>24 Hours</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- SOPs -->
+        <section class="doc-section">
+            <h2>4. Standard Operating Procedures</h2>
+
+            <h3>4.1 Sales Agent Workflow</h3>
+            <p><strong>Objective:</strong> Convert qualified leads into closed sales with accurate regional pricing.</p>
+
+            <h4>Step 1: Lead Intake</h4>
+            <ol>
+                <li>Agent creates a new Lead in Salesforce.</li>
+                <li><strong>System Requirement:</strong> Must enter Phone OR Email (validation rule enforces this).</li>
+                <li>Select the correct <strong>Region</strong> (North America, Europe, or Asia).</li>
+                <li>Save the Lead.</li>
+            </ol>
+
+            <h4>Step 2: Lead Qualification (Using Path)</h4>
+            <ol>
+                <li>View the <strong>Lead Score</strong> on the record.
+                    <ul>
+                        <li>Score > 30: Hot prospect. Call immediately.</li>
+                        <li>Score 20-30: Warm prospect. Follow up within 24 hours.</li>
+                        <li>Score < 20: Nurture via email campaigns.</li>
+                    </ul>
+                </li>
+                <li>Follow the <strong>Path</strong> at the top of the page.</li>
+                <li>Read the "Guidance for Success" tips at each stage.</li>
+                <li>Update Status as you progress: <code>Open - Not Contacted</code> → <code>Working - Contacted</code> → <code>Closed - Converted</code>.</li>
+            </ol>
+
+            <h4>Step 3: Lead Conversion</h4>
+            <ol>
+                <li>When the prospect is qualified, click <strong>Convert</strong>.</li>
+                <li>Create: Account + Contact + Opportunity.</li>
+                <li>Verify the <strong>Region</strong> field copied to the Account (required for correct pricing).</li>
+            </ol>
+
+            <h4>Step 4: Quoting</h4>
+            <ol>
+                <li>Navigate to the Opportunity.</li>
+                <li>Select the correct <strong>Price Book</strong> based on Account Region:
+                    <ul>
+                        <li>North America → <code>North America Price Book</code></li>
+                        <li>Europe → <code>Europe Price Book</code></li>
+                        <li>Asia → <code>Asia Price Book</code></li>
+                    </ul>
+                </li>
+                <li>Add <strong>Products</strong> from the Products related list.</li>
+                <li>Click <strong>Quotes</strong> related list > <strong>New Quote</strong>.</li>
+                <li>Fill in Quote details (Discount, Expiration Date).</li>
+                <li>Click <strong>Save</strong>.</li>
+                <li>Click <strong>Create PDF</strong> > Select template > <strong>Save to Quote</strong>.</li>
+                <li>Click <strong>Email Quote</strong> to send to the customer.</li>
+            </ol>
+
+            <h3>4.2 Support Agent Workflow</h3>
+            <p><strong>Objective:</strong> Resolve customer inquiries within SLA times.</p>
+
+            <h4>Step 1: Case Triage</h4>
+            <ol>
+                <li>Cases arrive via:
+                    <ul>
+                        <li><strong>Web:</strong> Customer submits via Help Center (Web-to-Case).</li>
+                        <li><strong>Email:</strong> Email-to-Case (if configured).</li>
+                        <li><strong>Phone:</strong> Agent creates manually.</li>
+                    </ul>
+                </li>
+                <li>System <strong>automatically assigns</strong> the Case to the correct Queue:
+                    <ul>
+                        <li>Premium Account → Premium Support Queue</li>
+                        <li>Standard Account → Standard Support Queue</li>
+                        <li>Basic Account → Basic Support Queue</li>
+                    </ul>
+                </li>
+                <li>Agent views their Queue and accepts a Case.</li>
+            </ol>
+
+            <h4>Step 2: SLA Management</h4>
+            <ol>
+                <li>Check the <strong>Case Record</strong> for the Milestone Tracker.</li>
+                <li>Note the countdown timers:
+                    <ul>
+                        <li><strong>First Response:</strong> Time remaining to acknowledge the case.</li>
+                        <li><strong>Case Resolution:</strong> Time remaining to fully resolve.</li>
+                    </ul>
+                </li>
+                <li>Premium Customers: First response required within 1 hour.</li>
+                <li>If approaching deadline, escalate immediately to Support Manager.</li>
+            </ol>
+
+            <h4>Step 3: Resolution Using Knowledge</h4>
+            <ol>
+                <li>Open the <strong>Knowledge</strong> sidebar on the Case page.</li>
+                <li>Search for keywords related to the customer's issue.</li>
+                <li>If an article solves the problem:
+                    <ul>
+                        <li>Click <strong>Attach to Case</strong>.</li>
+                        <li>Send the article link to the customer.</li>
+                    </ul>
+                </li>
+                <li>If no article exists, resolve manually and consider creating a new Knowledge article.</li>
+            </ol>
+
+            <h4>Step 4: Case Closure</h4>
+            <ol>
+                <li>Update the <strong>Status</strong> to <code>Closed</code>.</li>
+                <li>Add a <strong>Resolution Summary</strong> describing how the issue was solved.</li>
+                <li>Verify the Milestone shows as "Completed" (not "Violated").</li>
+            </ol>
+
+            <h3>4.3 Customer Self-Service Workflow</h3>
+            <p><strong>Objective:</strong> Deflect simple support tickets through self-service.</p>
+
+            <h4>Option A: Help Center Search</h4>
+            <ol>
+                <li>Customer navigates to the <strong>EliMax Help Center</strong> (Experience Cloud site).</li>
+                <li>Customer enters keywords in the <strong>Knowledge Search</strong> (e.g., "inverter error", "billing").</li>
+                <li>Customer views relevant Knowledge Articles.</li>
+                <li>If resolved, customer exits (no Case created = deflection success).</li>
+                <li>If unresolved, customer clicks <strong>Contact Support</strong> to submit a Case.</li>
+            </ol>
+
+            <h4>Option B: Case Deflection Flow (Recommended)</h4>
+            <ol>
+                <li>Customer launches the <strong>Case Deflection Flow</strong>.</li>
+                <li>Customer selects their issue category (Billing, Technical, Warranty, etc.).</li>
+                <li>Flow displays relevant Knowledge Articles automatically.</li>
+                <li>Customer indicates whether the articles solved their problem.</li>
+                <li><strong>If Yes:</strong> Flow ends with thank you message. <em>Case deflected.</em></li>
+                <li><strong>If No:</strong> Flow collects case details and creates Case automatically.</li>
+                <li>Customer receives confirmation with Case Number.</li>
+            </ol>
+            <div class="info-box">
+                <p>The Flow approach ensures customers always see relevant articles before case creation, increasing deflection rates.</p>
+            </div>
+        </section>
+
+        <!-- Security -->
+        <section class="doc-section">
+            <h2>5. Security & Access Control</h2>
+
+            <h3>5.1 Role Hierarchy</h3>
+            <div class="hierarchy">CEO
+├── Sales Manager
+│   └── Sales Representative
+└── Support Manager
+    └── Support Agent</div>
+            <p><em>Managers can view and report on all records owned by their subordinates.</em></p>
+
+            <h3>5.2 Profiles</h3>
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Profile</th>
+                            <th>Object Access</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>EliMax Sales User</td>
+                            <td>Leads (CRE), Opportunities (CRE), Quotes (CRE), Cases (R)</td>
+                        </tr>
+                        <tr>
+                            <td>EliMax Support User</td>
+                            <td>Cases (CRE), Knowledge (R), Entitlements (R), Accounts (R)</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <p><em>CRE = Create, Read, Edit. R = Read Only.</em></p>
+        </section>
+
+        <!-- Reporting -->
+        <section class="doc-section">
+            <h2>6. Reporting & Dashboards</h2>
+            <p><strong>EliMax Executive Overview Dashboard:</strong></p>
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Component</th>
+                            <th>Metric</th>
+                            <th>Purpose</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Donut Chart</td>
+                            <td>Leads by Region</td>
+                            <td>Territory distribution visibility</td>
+                        </tr>
+                        <tr>
+                            <td>Bar Chart</td>
+                            <td>Cases by Support Tier</td>
+                            <td>Workload per tier</td>
+                        </tr>
+                        <tr>
+                            <td>Gauge</td>
+                            <td>SLA Compliance %</td>
+                            <td>Monitor service quality</td>
+                        </tr>
+                        <tr>
+                            <td>Table</td>
+                            <td>Open Escalations</td>
+                            <td>Identify at-risk cases</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Future Enhancements -->
+        <section class="doc-section">
+            <h2>7. Future Enhancements</h2>
+            <p><strong>Phase 2 Recommendations:</strong></p>
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Enhancement</th>
+                            <th>Benefit</th>
+                            <th>Estimated Effort</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Einstein Lead Scoring</td>
+                            <td>Replace formula with AI-driven scoring</td>
+                            <td>2 weeks</td>
+                        </tr>
+                        <tr>
+                            <td>Einstein Bots</td>
+                            <td>Instant chat support before case creation</td>
+                            <td>3 weeks</td>
+                        </tr>
+                        <tr>
+                            <td>ERP Integration</td>
+                            <td>Live inventory for product availability</td>
+                            <td>4 weeks</td>
+                        </tr>
+                        <tr>
+                            <td>CTI Integration</td>
+                            <td>Screen pop for inbound calls</td>
+                            <td>2 weeks</td>
+                        </tr>
+                        <tr>
+                            <td>SMS Notifications</td>
+                            <td>SLA breach alerts via text</td>
+                            <td>1 week</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Quick Reference -->
+        <section class="doc-section">
+            <h2>8. Appendix: Quick Reference</h2>
+
+            <h3>Lead Score Thresholds</h3>
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Score</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>30-40</td>
+                            <td>Call immediately</td>
+                        </tr>
+                        <tr>
+                            <td>20-29</td>
+                            <td>Follow up within 24 hours</td>
+                        </tr>
+                        <tr>
+                            <td>10-19</td>
+                            <td>Add to nurture campaign</td>
+                        </tr>
+                        <tr>
+                            <td>0-9</td>
+                            <td>Low priority, review weekly</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h3>SLA Summary</h3>
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Tier</th>
+                            <th>First Response</th>
+                            <th>Resolution</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Premium</td>
+                            <td>1 hour</td>
+                            <td>8 hours</td>
+                        </tr>
+                        <tr>
+                            <td>Standard</td>
+                            <td>4 hours</td>
+                            <td>24 hours</td>
+                        </tr>
+                        <tr>
+                            <td>Basic</td>
+                            <td>8 hours</td>
+                            <td>48 hours</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h3>Price Book Selection</h3>
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Account Region</th>
+                            <th>Price Book</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>North America</td>
+                            <td>North America Price Book (USD)</td>
+                        </tr>
+                        <tr>
+                            <td>Europe</td>
+                            <td>Europe Price Book (EUR)</td>
+                        </tr>
+                        <tr>
+                            <td>Asia</td>
+                            <td>Asia Price Book (USD)</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>© 2026 EliMax Group Solar Implementation. All rights reserved.</p>
+    </footer>
+</body>
+</html>

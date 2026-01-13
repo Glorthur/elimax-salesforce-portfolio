@@ -1,0 +1,1217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Step-by-Step Build Guide | EliMax Group</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-primary: #020617;
+            --bg-secondary: #0f172a;
+            --bg-card: #1e293b;
+            --text-primary: #f8fafc;
+            --text-secondary: #94a3b8;
+            --accent: #3b82f6;
+            --accent-hover: #2563eb;
+            --border: #334155;
+            --success: #22c55e;
+            --warning: #f59e0b;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.7;
+        }
+
+        a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 1rem 2rem;
+            background: rgba(2, 6, 23, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .back-link {
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: color 0.2s;
+        }
+
+        .back-link:hover {
+            color: var(--text-primary);
+            text-decoration: none;
+        }
+
+        /* Main Content */
+        .doc-container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 8rem 2rem 4rem;
+        }
+
+        .doc-header {
+            margin-bottom: 3rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .doc-header h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .doc-header h1 span {
+            color: var(--accent);
+        }
+
+        .doc-intro {
+            color: var(--text-secondary);
+            margin-top: 1rem;
+        }
+
+        /* Warning box */
+        .warning-box {
+            background: rgba(245, 158, 11, 0.1);
+            border-left: 4px solid var(--warning);
+            padding: 1rem 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 0 0.5rem 0.5rem 0;
+        }
+
+        .warning-box strong {
+            color: var(--warning);
+        }
+
+        /* Phase sections */
+        .phase-section {
+            margin-bottom: 4rem;
+        }
+
+        .phase-title {
+            font-size: 1.75rem;
+            font-weight: 700;
+            margin-bottom: 2rem;
+            padding: 1rem 1.5rem;
+            background: linear-gradient(90deg, var(--accent), transparent);
+            border-radius: 0.5rem;
+            display: inline-block;
+        }
+
+        .phase-title span {
+            color: var(--text-secondary);
+            font-weight: 400;
+            font-size: 1rem;
+            margin-left: 0.5rem;
+        }
+
+        /* Subsections */
+        h3 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin: 2.5rem 0 1rem;
+            color: var(--text-primary);
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        h4 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin: 1.5rem 0 0.75rem;
+            color: var(--accent);
+        }
+
+        p {
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+        }
+
+        /* Context boxes */
+        .context {
+            font-style: italic;
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+            padding-left: 1rem;
+            border-left: 2px solid var(--border);
+        }
+
+        /* Dev org note */
+        .dev-note {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            padding: 1rem 1.5rem;
+            margin: 1rem 0;
+            border-radius: 0.5rem;
+            font-size: 0.875rem;
+        }
+
+        .dev-note::before {
+            content: "⚠️ DEV ORG NOTE: ";
+            font-weight: 600;
+            color: var(--warning);
+        }
+
+        /* Ordered lists (steps) */
+        ol {
+            margin: 1rem 0 1.5rem 0;
+            counter-reset: step-counter;
+            list-style: none;
+        }
+
+        ol > li {
+            counter-increment: step-counter;
+            margin-bottom: 0.75rem;
+            padding-left: 2.5rem;
+            position: relative;
+            color: var(--text-secondary);
+        }
+
+        ol > li::before {
+            content: counter(step-counter);
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 1.75rem;
+            height: 1.75rem;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--accent);
+        }
+
+        ol > li strong {
+            color: var(--text-primary);
+        }
+
+        /* Nested lists */
+        ol ol, ul {
+            margin: 0.5rem 0 0.5rem 1rem;
+            list-style: disc;
+        }
+
+        ul li, ol ol li {
+            padding-left: 0;
+            margin-bottom: 0.25rem;
+        }
+
+        ul li::before, ol ol li::before {
+            content: none;
+        }
+
+        ol ol {
+            list-style: lower-alpha;
+        }
+
+        /* Code blocks */
+        code {
+            font-family: 'JetBrains Mono', monospace;
+            background: var(--bg-card);
+            padding: 0.2rem 0.4rem;
+            border-radius: 0.25rem;
+            font-size: 0.85em;
+            color: var(--accent);
+        }
+
+        pre {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 0.5rem;
+            padding: 1.5rem;
+            overflow-x: auto;
+            margin: 1rem 0;
+        }
+
+        pre code {
+            background: none;
+            padding: 0;
+            font-size: 0.875rem;
+            color: var(--text-primary);
+        }
+
+        /* Tables */
+        .table-wrapper {
+            overflow-x: auto;
+            margin: 1.5rem 0;
+            border-radius: 0.5rem;
+            border: 1px solid var(--border);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.875rem;
+        }
+
+        th {
+            background: var(--bg-card);
+            color: var(--text-primary);
+            font-weight: 600;
+            text-align: left;
+            padding: 1rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        td {
+            padding: 0.875rem 1rem;
+            color: var(--text-secondary);
+            border-bottom: 1px solid var(--border);
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        tr:hover td {
+            background: rgba(59, 130, 246, 0.05);
+        }
+
+        /* Checklist table */
+        .checklist td:first-child {
+            font-weight: 600;
+        }
+
+        .check-yes {
+            color: var(--success);
+        }
+
+        .check-opt {
+            color: var(--text-secondary);
+        }
+
+        .check-star {
+            color: var(--warning);
+        }
+
+        /* Script section */
+        .script-section {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 0.5rem;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .script-section h4 {
+            margin-top: 0;
+            color: var(--text-primary);
+        }
+
+        .script-section p {
+            margin-bottom: 0.5rem;
+        }
+
+        /* Troubleshooting */
+        .troubleshoot-table td:first-child {
+            color: var(--text-primary);
+            font-weight: 500;
+        }
+
+        /* TOC */
+        .toc {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 0.5rem;
+            padding: 1.5rem 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .toc h3 {
+            margin: 0 0 1rem;
+            border: none;
+            padding: 0;
+        }
+
+        .toc ul {
+            list-style: none;
+            margin: 0;
+        }
+
+        .toc > ul > li {
+            padding: 0;
+            margin-bottom: 0.5rem;
+        }
+
+        .toc a {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .toc a:hover {
+            color: var(--accent);
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 2rem;
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+            border-top: 1px solid var(--border);
+            margin-top: 4rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .doc-container {
+                padding: 6rem 1rem 2rem;
+            }
+
+            .doc-header h1 {
+                font-size: 1.75rem;
+            }
+
+            .phase-title {
+                font-size: 1.25rem;
+                padding: 0.75rem 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="nav-container">
+            <a href="../index.html" class="logo">EliMaxGroup</a>
+            <a href="../index.html#docs" class="back-link">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M19 12H5M12 19l-7-7 7-7"/>
+                </svg>
+                Back to Portfolio
+            </a>
+        </div>
+    </nav>
+
+    <main class="doc-container">
+        <header class="doc-header">
+            <h1>Step-by-Step <span>Build Guide</span></h1>
+            <p>Project: EliMax Group Solar Companies</p>
+            <p class="doc-intro">This guide provides a granular, click-by-click walkthrough to build the solution in a Salesforce Developer Edition Org.</p>
+        </header>
+
+        <div class="warning-box">
+            <strong>⚠️ Dev Edition Limitations:</strong> This guide has been tailored for Developer Edition orgs. Where features are limited or unavailable, workarounds are provided. Items marked with [DEV ORG NOTE] require special attention.
+        </div>
+
+        <!-- Table of Contents -->
+        <div class="toc">
+            <h3>Table of Contents</h3>
+            <ul>
+                <li><a href="#phase1">Phase 1: Org Preparation & Feature Activation</a></li>
+                <li><a href="#phase2">Phase 2: Sales Cloud Configuration</a></li>
+                <li><a href="#phase3">Phase 3: Service Cloud Configuration</a></li>
+                <li><a href="#phase4">Phase 4: Experience Cloud (Help Center)</a></li>
+                <li><a href="#phase5">Phase 5: Security & Access (Profiles & Roles)</a></li>
+                <li><a href="#phase6">Phase 6: The Demo Dashboard</a></li>
+                <li><a href="#phase7">Phase 7: Case Deflection Flow (Standout Feature)</a></li>
+                <li><a href="#checklist">Final Checklist</a></li>
+                <li><a href="#demo-script">Demo Script Outline</a></li>
+                <li><a href="#troubleshooting">Troubleshooting</a></li>
+            </ul>
+        </div>
+
+        <!-- Phase 1 -->
+        <section id="phase1" class="phase-section">
+            <h2 class="phase-title">Phase 1 <span>Org Preparation & Feature Activation</span></h2>
+            <p>Before building specific objects, we must enable the core capabilities required by the project.</p>
+
+            <h3>1. Enable Multi-Currency</h3>
+            <p class="context">Context: The requirement states EliMax operates in different regions.</p>
+            <div class="dev-note">Multi-Currency works in Dev Edition but <strong>cannot be disabled once enabled</strong>. This is permanent.</div>
+            <ol>
+                <li>Log in to Salesforce.</li>
+                <li>Click the <strong>Gear Icon</strong> (top right) and select <strong>Setup</strong>.</li>
+                <li>In the "Quick Find" box on the top left, type <strong>Company Information</strong>.</li>
+                <li>Click <strong>Company Information</strong> in the sidebar.</li>
+                <li>Click the <strong>Edit</strong> button.</li>
+                <li>Find the checkbox labeled <strong>Activate Multiple Currencies</strong> and check it.</li>
+                <li>Click <strong>Save</strong>.</li>
+                <li>Now, in the Quick Find box, type <strong>Manage Currencies</strong>.</li>
+                <li>Click <strong>Manage Currencies</strong>.</li>
+                <li>Click <strong>New</strong> to add currencies:
+                    <ul>
+                        <li><strong>EUR - Euro:</strong> Conversion rate <code>0.92</code></li>
+                        <li><em>(Optional)</em> <strong>GBP - British Pound:</strong> Conversion rate <code>0.79</code></li>
+                    </ul>
+                </li>
+                <li>Click <strong>Save</strong> after each.</li>
+            </ol>
+
+            <h3>2. Enable Lightning Knowledge</h3>
+            <p class="context">Context: Required for the "Self-Service" and "Knowledge Base" deliverables.</p>
+            <ol>
+                <li>In Setup, type <strong>Knowledge</strong> in the Quick Find box.</li>
+                <li>Click <strong>Knowledge Settings</strong>.</li>
+                <li>Check the box <strong>Enable Lightning Knowledge</strong>.</li>
+                <li>If prompted, a wizard will start. Accept the defaults and complete it.</li>
+                <li>Click <strong>Save</strong> or <strong>Finish</strong>.</li>
+            </ol>
+
+            <h3>3. Enable Entitlement Management</h3>
+            <p class="context">Context: Required for SLAs (Service Level Agreements).</p>
+            <ol>
+                <li>In Setup, type <strong>Entitlement</strong> in the Quick Find box.</li>
+                <li>Click <strong>Entitlement Settings</strong>.</li>
+                <li>Check the box <strong>Enable Entitlement Management</strong>.</li>
+                <li>Click <strong>Save</strong>.</li>
+            </ol>
+
+            <h3>4. Enable Digital Experiences (Community)</h3>
+            <p class="context">Context: Required for the "Customer Community Website".</p>
+            <div class="dev-note">Experience Cloud is available in Dev Edition with limitations. You get one free site with restricted features. This is sufficient for demo purposes.</div>
+            <ol>
+                <li>In Setup, type <strong>Digital Experiences</strong> in the Quick Find box.</li>
+                <li>Click <strong>Settings</strong>.</li>
+                <li>Check the box <strong>Enable Digital Experiences</strong>.</li>
+                <li>It will ask for a <strong>Domain Name</strong>. Enter something unique like <code>elimax-portfolio-[yourinitials]</code>.</li>
+                <li>Click <strong>Check Availability</strong>.</li>
+                <li>If available, click <strong>Save</strong>.</li>
+                <li>Click <strong>OK</strong> on the warning (you can't change this domain name later).</li>
+            </ol>
+        </section>
+
+        <!-- Phase 2 -->
+        <section id="phase2" class="phase-section">
+            <h2 class="phase-title">Phase 2 <span>Sales Cloud Configuration</span></h2>
+
+            <h3>1. Data Quality: Validation Rules</h3>
+            <p class="context">Context: Fix "incomplete or inaccurate contact information".</p>
+            <ol>
+                <li>Click <strong>Object Manager</strong> (tab next to Home in Setup).</li>
+                <li>Click <strong>Lead</strong>.</li>
+                <li>Click <strong>Validation Rules</strong> in the left sidebar.</li>
+                <li>Click <strong>New</strong>.</li>
+                <li><strong>Rule Name:</strong> <code>Require_Phone_or_Email</code>.</li>
+                <li><strong>Description:</strong> "Ensures agent enters at least one contact method."</li>
+                <li><strong>Error Condition Formula:</strong>
+<pre><code>AND(
+    ISBLANK(Phone),
+    ISBLANK(Email)
+)</code></pre>
+                </li>
+                <li><strong>Error Message:</strong> "You must provide at least a Phone Number or Email Address to save this Lead."</li>
+                <li><strong>Error Location:</strong> Select "Top of Page".</li>
+                <li>Click <strong>Save</strong>.</li>
+            </ol>
+
+            <h3>2. Custom Fields: Region & Lead Score</h3>
+            <p class="context">Context: "Standardized approach to scoring leads" and "Region-specific pricing".</p>
+
+            <h4>Create Region Field on Lead:</h4>
+            <ol>
+                <li>Still in <strong>Object Manager > Lead</strong>, click <strong>Fields & Relationships</strong>.</li>
+                <li>Click <strong>New</strong>.</li>
+                <li>Select <strong>Picklist</strong> and click <strong>Next</strong>.</li>
+                <li><strong>Field Label:</strong> <code>Region</code>.</li>
+                <li><strong>Values:</strong> Select "Enter values...". Type:
+<pre><code>North America
+Europe
+Asia</code></pre>
+                </li>
+                <li>Click <strong>Next</strong>, <strong>Next</strong>, <strong>Save & New</strong> (to create the next field immediately).</li>
+            </ol>
+
+            <h4>Create Lead Score Field:</h4>
+            <ol>
+                <li>Select <strong>Formula</strong> and click <strong>Next</strong>.</li>
+                <li><strong>Field Label:</strong> <code>Lead Score</code>.</li>
+                <li><strong>Formula Return Type:</strong> <strong>Number</strong> (Decimal Places: 0).</li>
+                <li>Click <strong>Next</strong>.</li>
+                <li><strong>Formula Editor:</strong> Copy and paste this logic:
+<pre><code>IF( NOT(ISBLANK(Email)) , 10, 0) + 
+IF( NOT(ISBLANK(Phone)) , 10, 0) + 
+CASE(Rating, 
+    "Hot", 20, 
+    "Warm", 10, 
+    0
+)</code></pre>
+                </li>
+                <li>Click <strong>Check Syntax</strong> to ensure no errors.</li>
+                <li>Click <strong>Next</strong>, <strong>Next</strong>, <strong>Save</strong>.</li>
+            </ol>
+
+            <h4>Create Region Field on Account (Critical for Quote Pricing):</h4>
+            <ol>
+                <li>Go to <strong>Object Manager > Account</strong> > <strong>Fields & Relationships</strong>.</li>
+                <li>Click <strong>New</strong> > <strong>Picklist</strong>.</li>
+                <li><strong>Field Label:</strong> <code>Region</code>.</li>
+                <li><strong>Values:</strong> <code>North America</code>, <code>Europe</code>, <code>Asia</code>.</li>
+                <li>Click <strong>Next</strong>, <strong>Next</strong>, <strong>Save</strong>.</li>
+            </ol>
+            <p><em>Why this matters: When a Lead converts, the Region must exist on Account so you can select the correct regional Price Book for Opportunities.</em></p>
+
+            <h3>3. Sales Process & Path</h3>
+            <p class="context">Context: "Visual sales process with clear guidance."</p>
+            <ol>
+                <li>In Setup Quick Find, type <strong>Path</strong>.</li>
+                <li>Click <strong>Path Settings</strong>.</li>
+                <li>Click <strong>Enable Path</strong> (if not already enabled).</li>
+                <li>Click <strong>New Path</strong>.</li>
+                <li><strong>Path Name:</strong> <code>Solar Sales Path</code>.</li>
+                <li><strong>Object:</strong> <code>Lead</code>.</li>
+                <li><strong>Record Type:</strong> Master.</li>
+                <li><strong>Picklist:</strong> <code>Lead Status</code>.</li>
+                <li>Click <strong>Next</strong>.</li>
+                <li><strong>Guidance for Success:</strong>
+                    <ul>
+                        <li>Click on the <strong>"Open - Not Contacted"</strong> tab. In "Fields", add <code>Region</code> and <code>Lead Score</code>. In "Guidance", type: "Check the Lead Score. If >20, call immediately. Verify contact info before proceeding."</li>
+                        <li>Click on <strong>"Working - Contacted"</strong>. Add fields like <code>MobilePhone</code>, <code>Company</code>. In "Guidance", type: "Confirm the customer's region and energy needs. Schedule site assessment."</li>
+                        <li>Click on <strong>"Closed - Converted"</strong>. In "Guidance", type: "Create Opportunity. Select the correct regional Price Book."</li>
+                    </ul>
+                </li>
+                <li>Click <strong>Next</strong> and <strong>Activate Your Path</strong>.</li>
+                <li>Click <strong>Finish</strong>.</li>
+            </ol>
+
+            <h3>4. Regional Pricing (Products & Price Books)</h3>
+            <p class="context">Context: "Quotes based on regional prices."</p>
+
+            <h4>Step A: Create Products</h4>
+            <ol>
+                <li>Click the <strong>App Launcher</strong> (9 dots, top left). Search for <strong>Products</strong>.</li>
+                <li>Click <strong>New</strong>.</li>
+                <li><strong>Product Name:</strong> <code>EliMax Solar Panel 300W</code>.</li>
+                <li><strong>Product Code:</strong> <code>PANEL-300W</code>.</li>
+                <li><strong>Active:</strong> Checked.</li>
+                <li>Click <strong>Save</strong>.</li>
+                <li>Go to the <strong>Related</strong> tab of the Product you just made.</li>
+                <li>Find <strong>Price Books</strong> section. Click <strong>Add Standard Price</strong>.</li>
+                <li>Enter <code>1000</code> (USD). Click <strong>Save</strong>.</li>
+                <li>Create a second product: <code>EliMax Inverter 5kW</code>.
+                    <ul>
+                        <li><strong>Product Code:</strong> <code>INV-5KW</code>.</li>
+                        <li><strong>Standard Price:</strong> <code>2500</code> USD.</li>
+                    </ul>
+                </li>
+            </ol>
+
+            <h4>Step B: Create Regional Price Books</h4>
+            <p><strong>Europe Price Book:</strong></p>
+            <ol>
+                <li>App Launcher > <strong>Price Books</strong>.</li>
+                <li>Click <strong>New</strong>.</li>
+                <li><strong>Name:</strong> <code>Europe Price Book</code>.</li>
+                <li><strong>Active:</strong> Checked.</li>
+                <li>Click <strong>Save</strong>.</li>
+                <li>Go to the <strong>Related</strong> tab > <strong>Price Book Entries</strong> > <strong>Add Products</strong>.</li>
+                <li>Select both products and click <strong>Next</strong>.</li>
+                <li>Select <strong>EUR</strong> currency.</li>
+                <li><strong>List Prices:</strong> Panel = <code>920</code>, Inverter = <code>2300</code>.</li>
+                <li>Click <strong>Save</strong>.</li>
+            </ol>
+
+            <p><strong>North America Price Book:</strong> Repeat above with Name: <code>North America Price Book</code>, Currency: USD, Prices: Panel = <code>1000</code>, Inverter = <code>2500</code>.</p>
+
+            <p><strong>Asia Price Book:</strong> Name: <code>Asia Price Book</code>, Currency: USD, Prices: Panel = <code>950</code>, Inverter = <code>2400</code>.</p>
+
+            <h3>5. Enable Quotes</h3>
+            <p class="context">Context: Agents need to generate quotes for prospects.</p>
+            <div class="dev-note">Quote PDF generation uses the standard template in Dev Edition. Custom quote templates require switching to Salesforce Classic to configure, which is optional.</div>
+            <ol>
+                <li>Setup > Quick Find <strong>Quote Settings</strong>.</li>
+                <li>Click <strong>Enable Quotes</strong>.</li>
+                <li>Click <strong>Save</strong>.</li>
+            </ol>
+        </section>
+
+        <!-- Phase 3 -->
+        <section id="phase3" class="phase-section">
+            <h2 class="phase-title">Phase 3 <span>Service Cloud Configuration</span></h2>
+
+            <h3>1. Support Tiers (Account Field)</h3>
+            <p class="context">Context: "Basic, Standard, and Premium support."</p>
+            <ol>
+                <li><strong>Object Manager</strong> > <strong>Account</strong> > <strong>Fields & Relationships</strong>.</li>
+                <li>Click <strong>New</strong> > <strong>Picklist</strong>.</li>
+                <li><strong>Label:</strong> <code>Support Tier</code>.</li>
+                <li><strong>Values:</strong> <code>Basic</code>, <code>Standard</code>, <code>Premium</code>.</li>
+                <li><strong>Default Value:</strong> <code>Basic</code>.</li>
+                <li>Click <strong>Next</strong>, <strong>Next</strong>, <strong>Save</strong>.</li>
+            </ol>
+
+            <h3>2. Support Queues</h3>
+            <p class="context">Context: Buckets to hold cases for each support tier.</p>
+            <ol>
+                <li>Setup > Quick Find <strong>Queues</strong>.</li>
+                <li>Click <strong>New</strong>.</li>
+                <li><strong>Label:</strong> <code>Premium Support Queue</code>.</li>
+                <li><strong>Queue Email:</strong> Leave blank.</li>
+                <li><strong>Supported Objects:</strong> Select <strong>Case</strong> and click <strong>Add</strong>.</li>
+                <li><strong>Queue Members:</strong> Add your User.</li>
+                <li>Click <strong>Save</strong>.</li>
+                <li>Repeat to create: <code>Standard Support Queue</code> and <code>Basic Support Queue</code>.</li>
+            </ol>
+
+            <h3>3. Case Assignment Rules</h3>
+            <p class="context">Context: "Automated case routing based on customer tier."</p>
+            <ol>
+                <li>Setup > Quick Find <strong>Case Assignment Rules</strong>.</li>
+                <li>Click <strong>New</strong>. Name it <code>EliMax Routing</code>. Check <strong>Active</strong>. Save.</li>
+                <li>Click <code>EliMax Routing</code> to open it.</li>
+                <li>Click <strong>New</strong> (Rule Entry).</li>
+                <li><strong>Sort Order:</strong> 1.</li>
+                <li><strong>Field Criteria:</strong> <code>Account: Support Tier</code> <strong>EQUALS</strong> <code>Premium</code>.</li>
+                <li><strong>Select the User or Queue:</strong> Change dropdown to <strong>Queue</strong>. Search <code>Premium Support Queue</code>.</li>
+                <li>Click <strong>Save & New</strong>.</li>
+                <li>Repeat for Standard (Sort Order: 2) and Basic (Sort Order: 3) tiers.</li>
+            </ol>
+
+            <h3>4. Web-to-Case (Automated Case Creation)</h3>
+            <p class="context">Context: "Automate case creation" from customer inquiries.</p>
+            <div class="dev-note">Web-to-Case works in Dev Edition. The generated HTML form submits directly to Salesforce and creates cases.</div>
+            <ol>
+                <li>Setup > Quick Find <strong>Web-to-Case</strong>.</li>
+                <li>Click <strong>Web-to-Case</strong>.</li>
+                <li>Check <strong>Enable Web-to-Case</strong>.</li>
+                <li><strong>Default Case Origin:</strong> <code>Web</code>.</li>
+                <li>Click <strong>Save</strong>.</li>
+                <li>Click <strong>Generate HTML</strong>.</li>
+                <li>Select fields: <code>Subject</code>, <code>Description</code>, <code>Email</code>, <code>Phone</code>.</li>
+                <li>Click <strong>Generate</strong>.</li>
+                <li>Copy and save this HTML code (you can use it in your demo).</li>
+            </ol>
+
+            <h3>5. Entitlements & SLAs</h3>
+            <p class="context">Context: "Ensure SLAs are adhered to."</p>
+
+            <h4>A. Add Entitlement Fields to Case Layout</h4>
+            <ol>
+                <li>Object Manager > Case > Page Layouts > Case Layout.</li>
+                <li>Drag <strong>Entitlement Name</strong> to the layout.</li>
+                <li>Click <strong>Save</strong>.</li>
+            </ol>
+
+            <h4>B. Create Milestones</h4>
+            <ol>
+                <li>Setup > Quick Find <strong>Milestones</strong>.</li>
+                <li>Click <strong>New Milestone</strong>.</li>
+                <li><strong>Name:</strong> <code>First Response</code>.</li>
+                <li><strong>Recurrence Type:</strong> No Recurrence.</li>
+                <li>Click <strong>Save</strong>.</li>
+                <li>Repeat for <code>Case Resolution</code>.</li>
+            </ol>
+
+            <h4>C. Create Premium Entitlement Process</h4>
+            <ol>
+                <li>Setup > Quick Find <strong>Entitlement Processes</strong>.</li>
+                <li>Click <strong>New</strong>.</li>
+                <li><strong>Entitlement Process Type:</strong> Case.</li>
+                <li><strong>Name:</strong> <code>Premium Support SLA</code>.</li>
+                <li>Click <strong>Save</strong>.</li>
+                <li>On the detailed screen, find <strong>Milestones</strong>. Click <strong>New Milestone</strong>.</li>
+                <li><strong>Milestone Name:</strong> <code>First Response</code>. <strong>Time Trigger:</strong> <code>60</code> minutes (1 Hour for Premium). <strong>Start Time:</strong> <code>Case: Created Date</code>.</li>
+                <li>Click <strong>Save</strong>.</li>
+                <li>Add <code>Case Resolution</code>: <code>480</code> minutes (8 Hours for Premium).</li>
+            </ol>
+
+            <h4>D. Create Standard Entitlement Process</h4>
+            <p>Name: <code>Standard Support SLA</code>. Milestones: First Response: 240 min (4 Hours), Case Resolution: 1440 min (24 Hours).</p>
+
+            <h4>E. Activate the Entitlement Processes</h4>
+            <ol>
+                <li>Open each Entitlement Process.</li>
+                <li>Click <strong>Activate</strong>.</li>
+            </ol>
+
+            <h4>F. Create Entitlement Records</h4>
+            <ol>
+                <li>App Launcher > <strong>Entitlements</strong>.</li>
+                <li>Click <strong>New</strong>.</li>
+                <li><strong>Entitlement Name:</strong> <code>Premium Support Entitlement</code>.</li>
+                <li><strong>Account:</strong> Select a test Premium Account.</li>
+                <li><strong>Entitlement Process:</strong> <code>Premium Support SLA</code>.</li>
+                <li><strong>Start Date:</strong> Today. <strong>End Date:</strong> 1 year from now.</li>
+                <li>Click <strong>Save</strong>.</li>
+            </ol>
+
+            <h3>6. Case Escalation Rules</h3>
+            <p class="context">Context: "Case escalation protocols" for SLA breaches.</p>
+            <div class="dev-note">Escalation Rules work in Dev Edition, but email notifications may not send due to email deliverability limits. Focus on the auto-reassignment feature for your demo.</div>
+            <ol>
+                <li>Setup > Quick Find <strong>Escalation Rules</strong>.</li>
+                <li>Click <strong>New</strong>. Name: <code>EliMax Escalation</code>. Check <strong>Active</strong>. Save.</li>
+                <li>Click <code>EliMax Escalation</code> to open it.</li>
+                <li>Click <strong>New</strong> (Rule Entry).</li>
+                <li><strong>Sort Order:</strong> 1.</li>
+                <li><strong>Criteria:</strong> <code>Case: Status</code> <strong>NOT EQUAL TO</strong> <code>Closed</code>.</li>
+                <li>Click <strong>Save</strong>.</li>
+                <li>Add <strong>Escalation Actions</strong>. Click <strong>New</strong>.</li>
+                <li><strong>Age Over:</strong> <code>60</code> minutes.</li>
+                <li><strong>Auto-reassign cases:</strong> Check this. Assign to yourself (as the "Manager").</li>
+                <li>Click <strong>Save</strong>.</li>
+            </ol>
+        </section>
+
+        <!-- Phase 4 -->
+        <section id="phase4" class="phase-section">
+            <h2 class="phase-title">Phase 4 <span>Experience Cloud (Help Center)</span></h2>
+            
+            <div class="dev-note">Experience Cloud has significant limitations in Dev Edition: Only one site allowed, some templates may be restricted, guest user permissions can be tricky, Knowledge visibility to guests requires specific configuration.</div>
+
+            <h3>1. Create Knowledge Articles</h3>
+            <p class="context">Context: "Robust self-service knowledge base."</p>
+            <ol>
+                <li>App Launcher > <strong>Knowledge</strong>.</li>
+                <li>Click <strong>New</strong>.</li>
+                <li>If it asks for Record Type, choose <strong>FAQ</strong> or the default.</li>
+                <li><strong>Title:</strong> "How to Clean and Maintain Your EliMax Solar Panels".</li>
+                <li><strong>Url Name:</strong> Auto-populates.</li>
+                <li><strong>Summary:</strong> Copy from the <code>Knowledge_Articles_Content.md</code> file.</li>
+                <li>Paste the Article Content into the body field.</li>
+                <li>Click <strong>Save</strong>.</li>
+                <li><strong>Critical:</strong> Click <strong>Publish</strong> (top right). Select <strong>Publish Now</strong>.</li>
+                <li>Repeat for all 4 articles.</li>
+            </ol>
+
+            <h3>2. Build the Help Center Site</h3>
+            <ol>
+                <li>Setup > Quick Find <strong>All Sites</strong>.</li>
+                <li>Click <strong>New</strong>.</li>
+                <li>Look for <strong>Help Center</strong> template. <em>(If not available, select Customer Service or Build Your Own.)</em></li>
+                <li>Click <strong>Get Started</strong>.</li>
+                <li>Enter Name: <code>EliMax Help</code>. URL: <code>help</code>. Click <strong>Create</strong>.</li>
+                <li><strong>Experience Builder</strong> opens.</li>
+                <li>Click the Hero/Banner. Change the headline to "How can we help with your Solar System?".</li>
+                <li>Ensure a <strong>Search</strong> component is on the page.</li>
+                <li>Add a <strong>Rich Text</strong> component with contact info as fallback.</li>
+                <li>Click <strong>Publish</strong> (Top Right).</li>
+            </ol>
+        </section>
+
+        <!-- Phase 5 -->
+        <section id="phase5" class="phase-section">
+            <h2 class="phase-title">Phase 5 <span>Security & Access</span></h2>
+            
+            <div class="dev-note">In Dev Edition, you cannot create custom profiles from scratch. You must clone an existing profile. Also, you have limited user licenses (typically 2), so you'll demo with your System Admin account.</div>
+
+            <h3>1. Create Role Hierarchy</h3>
+            <ol>
+                <li>Setup > Quick Find <strong>Roles</strong>.</li>
+                <li>Click <strong>Set Up Roles</strong> (or <strong>Add Role</strong> if hierarchy exists).</li>
+                <li>Under the top-level role, click <strong>Add Role</strong>.</li>
+                <li>Create: <code>Sales Manager</code>.</li>
+                <li>Under Sales Manager, add: <code>Sales Representative</code>.</li>
+                <li>Create another branch: <code>Support Manager</code> > <code>Support Agent</code>.</li>
+                <li>Click <strong>Save</strong>.</li>
+            </ol>
+
+            <h3>2. Clone Profiles (Optional for Demo)</h3>
+            <ol>
+                <li>Setup > Quick Find <strong>Profiles</strong>.</li>
+                <li>Find <strong>Standard User</strong> > Click <strong>Clone</strong>.</li>
+                <li><strong>Profile Name:</strong> <code>EliMax Sales User</code>.</li>
+                <li>Click <strong>Save</strong>.</li>
+                <li>Repeat for <code>EliMax Support User</code>.</li>
+            </ol>
+        </section>
+
+        <!-- Phase 6 -->
+        <section id="phase6" class="phase-section">
+            <h2 class="phase-title">Phase 6 <span>The Demo Dashboard</span></h2>
+
+            <h3>1. Create Reports</h3>
+            
+            <h4>Lead Pipeline Report:</h4>
+            <ol>
+                <li>App Launcher > <strong>Reports</strong> > <strong>New Report</strong>.</li>
+                <li><strong>Report Type:</strong> Leads.</li>
+                <li><strong>Filters:</strong> Lead Status not equal to Converted.</li>
+                <li><strong>Group Rows By:</strong> <code>Region</code>.</li>
+                <li><strong>Columns:</strong> Add <code>Lead Score</code>.</li>
+                <li>Click <strong>Save & Run</strong>. Name: <code>Leads by Region</code>.</li>
+            </ol>
+
+            <h4>Cases by Support Tier:</h4>
+            <ol>
+                <li>New Report > <strong>Cases</strong>.</li>
+                <li><strong>Group Rows By:</strong> <code>Account: Support Tier</code>.</li>
+                <li><strong>Columns:</strong> Case Number, Subject, Status.</li>
+                <li>Save as <code>Cases by Tier</code>.</li>
+            </ol>
+
+            <h3>2. Build the Dashboard</h3>
+            <ol>
+                <li>App Launcher > <strong>Dashboards</strong>.</li>
+                <li>Click <strong>New Dashboard</strong>. Name: <code>EliMax Executive Overview</code>.</li>
+                <li>Click <strong>+ Component</strong>.</li>
+                <li>Select <code>Leads by Region</code> report. Choose <strong>Donut Chart</strong>.</li>
+                <li>Add another component: <code>Cases by Tier</code> report. Choose <strong>Horizontal Bar Chart</strong>.</li>
+                <li>Arrange components and click <strong>Save</strong>.</li>
+            </ol>
+        </section>
+
+        <!-- Phase 7 -->
+        <section id="phase7" class="phase-section">
+            <h2 class="phase-title">Phase 7 <span>Case Deflection Flow ⭐</span></h2>
+            <p class="context">Context: This Screen Flow guides customers through self-service before creating a case. It directly addresses the requirement to "reduce the volume of support calls" and demonstrates advanced Salesforce automation skills.</p>
+            <p><strong>This is your differentiator.</strong> Most portfolio projects stop at configuration. This Flow shows you can build process automation.</p>
+
+            <h3>1. Create the Flow</h3>
+            <ol>
+                <li>Setup > Quick Find <strong>Flows</strong>.</li>
+                <li>Click <strong>New Flow</strong>.</li>
+                <li>Select <strong>Screen Flow</strong>. Click <strong>Create</strong>.</li>
+            </ol>
+
+            <h3>2. Build Screen 1: Issue Category Selection</h3>
+            <ol>
+                <li>From the toolbox on the left, drag a <strong>Screen</strong> element onto the canvas.</li>
+                <li><strong>Label:</strong> <code>Select Issue Type</code>.</li>
+                <li>Add a <strong>Picklist</strong> component:
+                    <ul>
+                        <li><strong>Label:</strong> <code>What is your issue about?</code></li>
+                        <li><strong>API Name:</strong> <code>Issue_Category</code></li>
+                        <li><strong>Choices:</strong> Billing & Payments, Technical / Inverter Issues, Maintenance & Cleaning, Warranty Claims, Other</li>
+                    </ul>
+                </li>
+                <li>Click <strong>Done</strong>.</li>
+            </ol>
+
+            <h3>3. Build the Knowledge Search (Get Records)</h3>
+            <ol>
+                <li>Drag a <strong>Get Records</strong> element onto the canvas.</li>
+                <li>Connect the first screen to this element.</li>
+                <li><strong>Label:</strong> <code>Find Related Articles</code>.</li>
+                <li><strong>Object:</strong> <code>Knowledge__kav</code>.</li>
+                <li><strong>Filter:</strong> <code>PublishStatus</code> Equals <code>Online</code>.</li>
+                <li>Click <strong>Done</strong>.</li>
+            </ol>
+
+            <h3>4. Build Screen 2: Display Knowledge Articles</h3>
+            <ol>
+                <li>Drag another <strong>Screen</strong> element.</li>
+                <li><strong>Label:</strong> <code>Review These Articles</code>.</li>
+                <li>Add <strong>Display Text</strong>: "We found some articles that might help. Please review them before submitting a case."</li>
+                <li>Add <strong>Radio Buttons</strong>:
+                    <ul>
+                        <li><strong>Label:</strong> <code>Did these articles solve your problem?</code></li>
+                        <li><strong>Choices:</strong> "Yes, my issue is resolved", "No, I still need help"</li>
+                    </ul>
+                </li>
+            </ol>
+
+            <h3>5. Add Decision Element</h3>
+            <ol>
+                <li>Drag a <strong>Decision</strong> element.</li>
+                <li><strong>Label:</strong> <code>Check If Resolved</code>.</li>
+                <li><strong>Outcome 1:</strong> <code>Issue Resolved</code> - when "Yes, my issue is resolved" is selected.</li>
+                <li><strong>Default Outcome:</strong> <code>Needs Case</code>.</li>
+            </ol>
+
+            <h3>6. Build Thank You Screen (Issue Resolved Path)</h3>
+            <ol>
+                <li>Drag a <strong>Screen</strong> element.</li>
+                <li>Connect "Issue Resolved" outcome to this screen.</li>
+                <li>Add Display Text: "✅ Great! We're glad the Knowledge Base helped."</li>
+            </ol>
+
+            <h3>7. Build Case Submission Screen (Needs Help Path)</h3>
+            <ol>
+                <li>Drag a <strong>Screen</strong> element.</li>
+                <li>Connect "Needs Case" outcome to this screen.</li>
+                <li>Add input fields: Subject, Description, Email, Phone.</li>
+            </ol>
+
+            <h3>8. Create the Case Record</h3>
+            <ol>
+                <li>Drag a <strong>Create Records</strong> element.</li>
+                <li>Connect Case Submission screen to this element.</li>
+                <li>Configure field mappings: Subject, Description, SuppliedEmail, SuppliedPhone, Origin, Status.</li>
+                <li>Store the Case ID in a variable.</li>
+            </ol>
+
+            <h3>9. Build Confirmation Screen</h3>
+            <ol>
+                <li>Drag a final <strong>Screen</strong> element.</li>
+                <li>Display the Case Number and SLA response times.</li>
+            </ol>
+
+            <h3>10. Save and Activate</h3>
+            <ol>
+                <li>Click <strong>Save</strong>.</li>
+                <li><strong>Flow Label:</strong> <code>EliMax Case Deflection Flow</code>.</li>
+                <li>Click <strong>Activate</strong>.</li>
+            </ol>
+        </section>
+
+        <!-- Checklist -->
+        <section id="checklist" class="phase-section">
+            <h2 class="phase-title">Final Checklist</h2>
+            <div class="table-wrapper">
+                <table class="checklist">
+                    <thead>
+                        <tr>
+                            <th>Item</th>
+                            <th>Status</th>
+                            <th>Notes</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Multi-Currency enabled</td>
+                            <td class="check-yes">✓</td>
+                            <td>At minimum USD + EUR</td>
+                        </tr>
+                        <tr>
+                            <td>Region field on Lead AND Account</td>
+                            <td class="check-yes">✓</td>
+                            <td>Both needed for pricing flow</td>
+                        </tr>
+                        <tr>
+                            <td>Lead validation rule active</td>
+                            <td class="check-yes">✓</td>
+                            <td>Test by saving Lead without phone/email</td>
+                        </tr>
+                        <tr>
+                            <td>Lead Path activated</td>
+                            <td class="check-yes">✓</td>
+                            <td>Should appear on Lead records</td>
+                        </tr>
+                        <tr>
+                            <td>All 3 Price Books created and active</td>
+                            <td class="check-yes">✓</td>
+                            <td>North America, Europe, Asia</td>
+                        </tr>
+                        <tr>
+                            <td>Quotes enabled</td>
+                            <td class="check-yes">✓</td>
+                            <td>PDF optional if issues</td>
+                        </tr>
+                        <tr>
+                            <td>Support Tier field on Account</td>
+                            <td class="check-yes">✓</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>3 Support Queues created</td>
+                            <td class="check-yes">✓</td>
+                            <td>Premium, Standard, Basic</td>
+                        </tr>
+                        <tr>
+                            <td>Case Assignment Rules active</td>
+                            <td class="check-yes">✓</td>
+                            <td>Test with a new Case</td>
+                        </tr>
+                        <tr>
+                            <td>Web-to-Case enabled</td>
+                            <td class="check-yes">✓</td>
+                            <td>HTML form generated</td>
+                        </tr>
+                        <tr>
+                            <td>Milestones created</td>
+                            <td class="check-yes">✓</td>
+                            <td>First Response, Case Resolution</td>
+                        </tr>
+                        <tr>
+                            <td>Entitlement Processes activated</td>
+                            <td class="check-yes">✓</td>
+                            <td>Premium SLA at minimum</td>
+                        </tr>
+                        <tr>
+                            <td>Escalation Rules configured</td>
+                            <td class="check-opt">○</td>
+                            <td>Optional, explain concept if issues</td>
+                        </tr>
+                        <tr>
+                            <td>All 4 Knowledge Articles published</td>
+                            <td class="check-yes">✓</td>
+                            <td>Must be Published, not Draft</td>
+                        </tr>
+                        <tr>
+                            <td>Experience Cloud site published</td>
+                            <td class="check-opt">○</td>
+                            <td>Fallback to internal demo</td>
+                        </tr>
+                        <tr>
+                            <td>Dashboard created</td>
+                            <td class="check-yes">✓</td>
+                            <td>At least 2-3 components</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Case Deflection Flow activated</strong></td>
+                            <td class="check-star">⭐</td>
+                            <td><strong>Standout feature</strong> - test end-to-end</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <p><strong>Legend:</strong> <span class="check-yes">✓</span> = Required, <span class="check-opt">○</span> = Nice to have, <span class="check-star">⭐</span> = Differentiator</p>
+        </section>
+
+        <!-- Demo Script -->
+        <section id="demo-script" class="phase-section">
+            <h2 class="phase-title">Demo Script <span>(15 minutes)</span></h2>
+
+            <div class="script-section">
+                <h4>Opening (2 min)</h4>
+                <p>"EliMax Group is growing fast but struggling with four key problems: poor lead data quality, no visual sales guidance, inconsistent support response times, and too many support calls that could be deflected. Let me show you how Salesforce solves each one."</p>
+            </div>
+
+            <div class="script-section">
+                <h4>Sales Demo (4 min)</h4>
+                <ol>
+                    <li>Create a Lead. Try to save without Phone or Email. <em>Show validation rule blocking the save.</em></li>
+                    <li>Add Phone, select Region = Europe, Rating = Hot. Save.</li>
+                    <li><em>Show the Path</em> at the top with stage guidance. Point out the Lead Score.</li>
+                    <li>Click <strong>Convert</strong>. Create Opportunity.</li>
+                    <li>On Opportunity, select <strong>Europe Price Book</strong>.</li>
+                    <li>Add Products. <em>Show the EUR pricing.</em></li>
+                    <li>Create a Quote. <em>(Show the Quote record even if PDF has issues.)</em></li>
+                </ol>
+            </div>
+
+            <div class="script-section">
+                <h4>Service Demo (4 min)</h4>
+                <ol>
+                    <li>Show an Account with Support Tier = Premium.</li>
+                    <li>Create a Case on that Account. Save.</li>
+                    <li><em>Show the Case routed to Premium Support Queue.</em></li>
+                    <li>Show the Milestone countdown (if Entitlement is linked).</li>
+                    <li>Open <strong>Knowledge</strong> sidebar. Search "inverter". Attach article.</li>
+                    <li>Close the Case.</li>
+                </ol>
+            </div>
+
+            <div class="script-section">
+                <h4>⭐ Case Deflection Flow Demo (3 min) - YOUR DIFFERENTIATOR</h4>
+                <p><em>"But what if we could prevent unnecessary cases from being created in the first place?"</em></p>
+                <ol>
+                    <li>Run the Case Deflection Flow.</li>
+                    <li>Select "Technical / Inverter Issues" as the category.</li>
+                    <li>Show the Knowledge articles being suggested.</li>
+                    <li>Select "Yes, my issue is resolved." <em>Show the thank you screen.</em></li>
+                    <li><em>Explain:</em> "That customer never created a case. In production, this could deflect 30-40% of support tickets."</li>
+                    <li>Run the Flow again. This time select "No, I still need help."</li>
+                    <li>Fill in case details and submit.</li>
+                    <li>Show the confirmation with Case Number.</li>
+                    <li>Navigate to Cases tab and show the newly created Case.</li>
+                </ol>
+            </div>
+
+            <div class="script-section">
+                <h4>Dashboard (1 min)</h4>
+                <p>Open the dashboard. Quick overview: "Leadership can see lead distribution by region and case volume by tier at a glance."</p>
+            </div>
+
+            <div class="script-section">
+                <h4>Close (1 min)</h4>
+                <p>"By implementing validation rules, visual paths, automated routing, SLA tracking, and intelligent case deflection, EliMax can now scale their operations without scaling their headcount. The Flow alone could save them hundreds of support hours per month."</p>
+            </div>
+        </section>
+
+        <!-- Troubleshooting -->
+        <section id="troubleshooting" class="phase-section">
+            <h2 class="phase-title">Troubleshooting <span>Common Dev Org Issues</span></h2>
+            <div class="table-wrapper">
+                <table class="troubleshoot-table">
+                    <thead>
+                        <tr>
+                            <th>Issue</th>
+                            <th>Solution</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Multi-Currency option not visible</td>
+                            <td>Check Company Information. May already be enabled.</td>
+                        </tr>
+                        <tr>
+                            <td>Knowledge articles not showing in search</td>
+                            <td>Ensure articles are <strong>Published</strong>, not Draft.</td>
+                        </tr>
+                        <tr>
+                            <td>Experience Cloud site shows blank</td>
+                            <td>Check guest user profile has access to Knowledge. Try viewing logged in.</td>
+                        </tr>
+                        <tr>
+                            <td>Quote PDF button missing</td>
+                            <td>Use Classic mode to create templates, or skip and show Quote record.</td>
+                        </tr>
+                        <tr>
+                            <td>Escalation emails not sending</td>
+                            <td>Expected in Dev Org. Focus on auto-reassignment in demo.</td>
+                        </tr>
+                        <tr>
+                            <td>Entitlements not tracking milestones</td>
+                            <td>Ensure Case has an Entitlement selected. Create Entitlement record first.</td>
+                        </tr>
+                        <tr>
+                            <td>Cases not routing to Queue</td>
+                            <td>Verify Assignment Rule is Active. Check "Assign using active assignment rules" when saving Case.</td>
+                        </tr>
+                        <tr>
+                            <td>Flow won't activate</td>
+                            <td>Check for errors in elements. Ensure all required fields are mapped.</td>
+                        </tr>
+                        <tr>
+                            <td>Flow "Get Records" returns nothing</td>
+                            <td>Verify Knowledge articles are Published. Remove filters if needed.</td>
+                        </tr>
+                        <tr>
+                            <td>Flow doesn't create Case</td>
+                            <td>Check field mappings in Create Records element. Ensure Subject is mapped.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <p style="text-align: center; font-size: 1.25rem; margin-top: 3rem; color: var(--accent);">
+            <strong>You are now ready to build and demo your solution!</strong>
+        </p>
+    </main>
+
+    <footer>
+        <p>© 2026 EliMax Group Solar Implementation. All rights reserved.</p>
+    </footer>
+</body>
+</html>
